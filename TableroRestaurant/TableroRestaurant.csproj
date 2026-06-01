@@ -9,11 +9,26 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
-    <Folder Include="wwwroot\" />
-    <Folder Include="Views\" />
-    <Folder Include="Viewmodels\" />
+    <Compile Remove="Views\**" />
+    <Compile Remove="wwwroot\**" />
+    <EmbeddedResource Remove="Views\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="Views\**" />
+    <None Remove="wwwroot\**" />
+    <Page Remove="Views\**" />
+    <Page Remove="wwwroot\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\script.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\styles.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

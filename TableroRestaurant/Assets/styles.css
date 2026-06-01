@@ -1,0 +1,90 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    background: #1E1E1E;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+.contenedor {
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.agregar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+input {
+    flex: 1;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #4CAF50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+    button:hover {
+        opacity: 0.8;
+    }
+
+.lista {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.pedido {
+    background: #2D2D2D;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.numero {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.estado {
+    font-size: 16px;
+    color: #CCCCCC;
+}
+
+.botones {
+    display: flex;
+    gap: 10px;
+}
+
+.btnListo {
+    background: #2196F3;
+}
+
+.btnEntregar {
+    background: #f44336;
+}
