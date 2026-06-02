@@ -16,7 +16,7 @@ namespace TableroRestaurant.Services
 
         private PedidosService pedidoService;
 
-        public event Action<string>? OnLog;
+        public event Action<string>? Mensaje;
 
         public HttpServerService(PedidosService pedidoService)
         {
@@ -42,7 +42,7 @@ namespace TableroRestaurant.Services
 
             hiloPrincipal.Start();
 
-            OnLog?.Invoke("Servidor iniciado");
+            Mensaje?.Invoke("Servidor iniciado");
         }
 
         private void EscucharPeticiones()
@@ -64,7 +64,7 @@ namespace TableroRestaurant.Services
                 }
                 catch (Exception ex)
                 {
-                    OnLog?.Invoke($"Error: {ex.Message}");
+                    Mensaje?.Invoke($"Error: {ex.Message}");
                 }
             }
         }
@@ -225,7 +225,7 @@ namespace TableroRestaurant.Services
             }
             catch (Exception ex)
             {
-                OnLog?.Invoke($"Error: {ex.Message}");
+                Mensaje?.Invoke($"Error: {ex.Message}");
 
                 response.StatusCode = 500;
             }
@@ -273,7 +273,7 @@ namespace TableroRestaurant.Services
 
             servidor.Stop();
 
-            OnLog?.Invoke("Servidor detenido");
+            Mensaje?.Invoke("Servidor detenido");
         }
     }
 }

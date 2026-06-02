@@ -19,12 +19,12 @@ namespace TableroRestaurant.Services
         public void AgregarPedido(string numero)
         {
             if (string.IsNullOrWhiteSpace(numero))
-                return;
+                throw new ArgumentException("El número de pedido no puede estar vacío");
 
             lock (Pedidos)
             {
                 if (Pedidos.Any(p => p.Numero == numero))
-                    return;
+                    throw new InvalidOperationException("Ya existe un pedido con ese número");
 
                 PedidoDTO pedido = new()
                 {
@@ -37,20 +37,22 @@ namespace TableroRestaurant.Services
                 PedidoCreado?.Invoke(pedido);
             }
         }
-
         public void MarcarListo(int id)
         {
             lock (Pedidos)
             {
                 var pedido = Pedidos.FirstOrDefault(p => p.Id == id);
-                if (pedido != null)
-                {
-                    pedido.Estado = "LISTO";
-                    PedidoModificado?.Invoke(pedido);
-                }
+
+                if (pedido == null)
+                    throw new KeyNotFoundException("El pedido no existe");
+
+                if (pedido.Estado == "ENTREGADO")
+                    throw new InvalidOperationException("No se puede marcar como listo un pedido ya entregado");
+
+                pedido.Estado = "LISTO";
+                PedidoModificado?.Invoke(pedido);
             }
         }
-
         public void EntregarPedido(int id)
         {
             lock (Pedidos)
@@ -58,12 +60,13 @@ namespace TableroRestaurant.Services
                 var pedido = Pedidos.FirstOrDefault(p => p.Id == id);
 
                 if (pedido == null)
-                    return;
+                    throw new KeyNotFoundException("El pedido no existe");
+
+                if (pedido.Estado == "PREPARANDO")
+                    throw new InvalidOperationException("No se puede entregar un pedido en preparación");
 
                 if (pedido.Estado != "LISTO")
-                {
-                    return;
-                }
+                    throw new InvalidOperationException("Solo se pueden entregar pedidos listos");
 
                 pedido.Estado = "ENTREGADO";
 
