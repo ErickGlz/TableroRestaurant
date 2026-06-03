@@ -22,7 +22,7 @@ namespace TableroRestaurant.Services
         {
             this.pedidoService = pedidoService;
 
-            string url = "http://localhost:8080/restaurant/";
+            string url = "http://*:8080/restaurant/";
             servidor.Prefixes.Add(url);
         }
 

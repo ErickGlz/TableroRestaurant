@@ -24,37 +24,44 @@ async function cargarPedidos() {
 
         const card = clone.querySelector(".card");
 
-        if (p.Estado === "PREPARANDO") {
-            document.querySelector(".pendiente").appendChild(card);
-        }
+        if (p.Estado === "PREPARANDO")
+            card.classList.add("preparando");
 
-        if (p.Estado === "LISTO") {
-            document.querySelector(".listo").appendChild(card);
-        }
+        if (p.Estado === "LISTO")
+            card.classList.add("listo");
 
-        if (p.Estado === "ENTREGADO") {
-            document.querySelector(".entregado").appendChild(card);
-        }
+        if (p.Estado === "ENTREGADO")
+            card.classList.add("entregado");
+
+        document.getElementById("listaPedidos")
+            .appendChild(clone);
     });
 }
 
 function limpiar() {
-    document.querySelector(".pendiente").innerHTML = "";
-    document.querySelector(".listo").innerHTML = "";
-    document.querySelector(".entregado").innerHTML = "";
+    document.getElementById("listaPedidos").innerHTML = "";
 }
 
 async function agregarPedido() {
 
     let numero = document.getElementById("txtNumero").value;
 
-    if (numero.trim() === "") return;
-
-    await fetch("/restaurant/agregar", {
+    let response = await fetch("/restaurant/agregar", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ Numero: numero })
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            Numero: numero
+        })
     });
+
+    let mensaje = await response.text();
+
+    if (mensaje !== "OK") {
+        alert(mensaje);
+        return;
+    }
 
     document.getElementById("txtNumero").value = "";
 
@@ -63,22 +70,44 @@ async function agregarPedido() {
 
 async function marcarListo(id) {
 
-    await fetch("/restaurant/listo", {
+    let response = await fetch("/restaurant/listo", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ Id: id })
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            Id: id
+        })
     });
+
+    let mensaje = await response.text();
+
+    if (mensaje !== "OK") {
+        alert(mensaje);
+        return;
+    }
 
     cargarPedidos();
 }
 
 async function entregarPedido(id) {
 
-    await fetch("/restaurant/entregar", {
+    let response = await fetch("/restaurant/entregar", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ Id: id })
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            Id: id
+        })
     });
+
+    let mensaje = await response.text();
+
+    if (mensaje !== "OK") {
+        alert(mensaje);
+        return;
+    }
 
     cargarPedidos();
 }

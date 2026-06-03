@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Threading;
 using TableroRestaurant.Models;
@@ -26,9 +23,9 @@ namespace TableroRestaurant.ViewModels
 
             service = new PedidosService();
 
-            service.PedidoCreado += OnCambio;
-            service.PedidoModificado += OnCambio;
-            service.PedidoEliminado += OnCambio;
+            service.PedidoCreado += Cambio;
+            service.PedidoModificado += Cambio;
+            service.PedidoEliminado += Cambio;
 
             Refresh();
 
@@ -45,7 +42,7 @@ namespace TableroRestaurant.ViewModels
             timer.Start();
         }
 
-        private void OnCambio(PedidoDTO obj)
+        private void Cambio(PedidoDTO obj)
         {
             dispatcher.BeginInvoke(() =>
             {
