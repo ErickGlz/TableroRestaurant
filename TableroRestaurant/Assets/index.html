@@ -3,35 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Restaurante</title>
-
-    <link rel="stylesheet" href="styles.css">
+    <link href="styles.css" rel="stylesheet" />
+    <title>Kanban Restaurante</title>
 </head>
+
 <body>
 
-    <div class="contenedor">
+    <h1>🍽 TABLERO DE PEDIDOS</h1>
 
-        <h1>Panel de Administración</h1>
-
-        <div class="agregar">
-
-            <input type="text"
-                   id="txtNumero"
-                   placeholder="Número de pedido">
-
-            <button onclick="agregarPedido()">
-                Agregar Pedido
-            </button>
-
-        </div>
-
-        <div id="listaPedidos" class="lista">
-
-        </div>
-
+    <div class="input">
+        <input type="text" id="txtNumero" placeholder="Número de pedido">
+        <button id="btnAgregar">Agregar</button>
     </div>
 
-    <script src="script.js"></script>
+    <table>
+        <thead>
+            <tr>
+                <th>PENDIENTE</th>
+                <th>LISTO</th>
+                <th>ENTREGADO</th>
+            </tr>
+        </thead>
 
+        <tbody>
+            <tr>
+                <td class="pendiente"></td>
+                <td class="listo"></td>
+                <td class="entregado"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <template id="templatePedido">
+        <div class="card">
+
+            <div class="numero"></div>
+            <div class="estado"></div>
+
+            <div class="botones">
+                <button class="btnListo">Listo</button>
+                <button class="btnEntregar">Entregar</button>
+            </div>
+
+        </div>
+    </template>
+
+    <script src="script.js"></script>
 </body>
 </html>

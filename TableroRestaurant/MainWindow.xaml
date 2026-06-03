@@ -5,34 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TableroRestaurant"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"  Background="#121212">
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="90"/>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Background="#111111" Padding="15">
-
+        <!-- HEADER -->
+        <Border Background="#1E1E1E" Padding="10">
             <StackPanel>
 
                 <TextBlock Text="🍽 PANEL DE PEDIDOS"
-                           FontSize="30"
+                           FontSize="28"
                            FontWeight="Bold"
                            Foreground="White"
                            HorizontalAlignment="Center"/>
 
                 <TextBlock Text="{Binding Hora}"
-                           FontSize="16"
-                           Foreground="Gray"
+                           FontSize="14"
+                           Foreground="#AAAAAA"
                            HorizontalAlignment="Center"/>
 
             </StackPanel>
-
         </Border>
 
-        <ScrollViewer Grid.Row="1">
+        <!-- CONTENIDO -->
+        <ScrollViewer Grid.Row="1" Margin="10">
 
             <ItemsControl ItemsSource="{Binding Pedidos}">
 
@@ -45,12 +45,12 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
 
-                        <Border Width="260"
-                                Height="140"
+                        <Border Width="250"
+                                Height="150"
                                 Margin="10"
                                 CornerRadius="12"
-                                Background="#2C2C2C"
-                                BorderBrush="#444"
+                                Background="#2A2A2A"
+                                BorderBrush="#3A3A3A"
                                 BorderThickness="1">
 
                             <Grid Margin="10">
@@ -61,29 +61,34 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
+                                <!-- NUMERO -->
                                 <TextBlock Text="{Binding Numero}"
-                                           FontSize="28"
+                                           FontSize="26"
                                            FontWeight="Bold"
                                            Foreground="#00E676"
-                                           HorizontalAlignment="Center"/>
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"/>
 
+                                <!-- ESTADO -->
                                 <TextBlock Grid.Row="1"
                                            Text="{Binding Estado}"
                                            FontSize="14"
-                                           Foreground="White"
+                                           Foreground="#DDDDDD"
                                            HorizontalAlignment="Center"
-                                           Margin="0,5,0,0"/>
+                                           Margin="0,5,0,10"/>
 
+                                <!-- BARRA DE ESTADO -->
                                 <Border Grid.Row="2"
-                                        Height="10"
-                                        CornerRadius="5"
-                                        Margin="20,15,20,0">
+                                        Height="12"
+                                        CornerRadius="6"
+                                        Margin="20,10,20,0">
 
                                     <Border.Style>
                                         <Style TargetType="Border">
                                             <Setter Property="Background" Value="Gray"/>
 
                                             <Style.Triggers>
+
                                                 <DataTrigger Binding="{Binding Estado}" Value="PREPARANDO">
                                                     <Setter Property="Background" Value="Orange"/>
                                                 </DataTrigger>
@@ -95,6 +100,7 @@
                                                 <DataTrigger Binding="{Binding Estado}" Value="ENTREGADO">
                                                     <Setter Property="Background" Value="DodgerBlue"/>
                                                 </DataTrigger>
+
                                             </Style.Triggers>
                                         </Style>
                                     </Border.Style>

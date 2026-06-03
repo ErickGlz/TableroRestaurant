@@ -37,6 +37,7 @@ namespace TableroRestaurant.Services
                 PedidoCreado?.Invoke(pedido);
             }
         }
+
         public void MarcarListo(int id)
         {
             lock (Pedidos)
@@ -53,6 +54,7 @@ namespace TableroRestaurant.Services
                 PedidoModificado?.Invoke(pedido);
             }
         }
+
         public void EntregarPedido(int id)
         {
             lock (Pedidos)

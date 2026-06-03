@@ -1,72 +1,59 @@
-﻿async function cargarPedidos() {
+﻿document.getElementById("btnAgregar")
+    .addEventListener("click", agregarPedido);
 
-    let response =
-        await fetch("/restaurant/pedidos");
+async function cargarPedidos() {
 
+    let response = await fetch("/restaurant/pedidos");
     let pedidos = await response.json();
 
-    let lista =
-        document.getElementById("listaPedidos");
+    limpiar();
 
-    lista.innerHTML = "";
+    pedidos.forEach(p => {
 
-    pedidos.forEach(pedido => {
+        const template = document.getElementById("templatePedido");
+        const clone = template.content.cloneNode(true);
 
-        lista.innerHTML += `
-        
-        <div class="pedido">
+        clone.querySelector(".numero").textContent = p.Numero;
+        clone.querySelector(".estado").textContent = p.Estado;
 
-            <div class="info">
+        clone.querySelector(".btnListo")
+            .addEventListener("click", () => marcarListo(p.Id));
 
-                <div class="numero">
-                    ${pedido.Numero}
-                </div>
+        clone.querySelector(".btnEntregar")
+            .addEventListener("click", () => entregarPedido(p.Id));
 
-                <div class="estado">
-                    ${pedido.Estado}
-                </div>
+        const card = clone.querySelector(".card");
 
-            </div>
+        if (p.Estado === "PREPARANDO") {
+            document.querySelector(".pendiente").appendChild(card);
+        }
 
-            <div class="botones">
+        if (p.Estado === "LISTO") {
+            document.querySelector(".listo").appendChild(card);
+        }
 
-                <button class="btnListo"
-                        onclick="marcarListo(${pedido.Id})">
-                    Listo
-                </button>
-
-                <button class="btnEntregar"
-                        onclick="entregarPedido(${pedido.Id})">
-                    Entregar
-                </button>
-
-            </div>
-
-        </div>
-        
-        `;
+        if (p.Estado === "ENTREGADO") {
+            document.querySelector(".entregado").appendChild(card);
+        }
     });
+}
+
+function limpiar() {
+    document.querySelector(".pendiente").innerHTML = "";
+    document.querySelector(".listo").innerHTML = "";
+    document.querySelector(".entregado").innerHTML = "";
 }
 
 async function agregarPedido() {
 
-    let numero =
-        document.getElementById("txtNumero").value;
+    let numero = document.getElementById("txtNumero").value;
 
-    if (numero.trim() == "") {
-        return;
-    }
+    if (numero.trim() === "") return;
 
     await fetch("/restaurant/agregar", {
         method: "POST",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-            Numero: numero
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ Numero: numero })
     });
 
     document.getElementById("txtNumero").value = "";
@@ -78,14 +65,8 @@ async function marcarListo(id) {
 
     await fetch("/restaurant/listo", {
         method: "POST",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-            Id: id
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ Id: id })
     });
 
     cargarPedidos();
@@ -95,19 +76,12 @@ async function entregarPedido(id) {
 
     await fetch("/restaurant/entregar", {
         method: "POST",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-            Id: id
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ Id: id })
     });
 
     cargarPedidos();
 }
 
 cargarPedidos();
-
 setInterval(cargarPedidos, 2000);
